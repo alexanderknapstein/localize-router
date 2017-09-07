@@ -60,6 +60,10 @@ import {RouterModule} from '@angular/router';
 
 import {routes} from './app.routes';
 
+export function LocalizeRouterHttpLoaderFactory(translate, location, settings, http) {
+  return new LocalizeRouterHttpLoader(translate, location, settings, http);
+}
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -68,8 +72,7 @@ import {routes} from './app.routes';
     LocalizeRouterModule.forRoot(routes, {
       parser: {
         provide: LocalizeParser,
-        useFactory: (translate, location, settings, http) =>
-            new LocalizeRouterHttpLoader(translate, location, settings, http),
+        useFactory: LocalizeRouterHttpLoaderFactory,
         deps: [TranslateService, Location, LocalizeRouterSettings, HttpClient]
       }
     }),
